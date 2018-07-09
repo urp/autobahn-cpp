@@ -18,7 +18,7 @@ build_gcc:
 		-t crossbario/autobahn-cpp \
 		-t crossbario/autobahn-cpp:gcc \
 		-t crossbario/autobahn-cpp:gcc-${AUTOBAHN_CPP_VERSION} \
-		-f docker/Dockerfile.gcc .
+		-f Dockerfile.gcc .
 
 build_clang:
 	time docker build \
@@ -27,7 +27,7 @@ build_clang:
 		--build-arg AUTOBAHN_CPP_VERSION=${AUTOBAHN_CPP_VERSION} \
 		-t crossbario/autobahn-cpp:clang \
 		-t crossbario/autobahn-cpp:clang-${AUTOBAHN_CPP_VERSION} \
-		-f docker/Dockerfile.clang .
+		-f Dockerfile.clang .
 
 # publish toolchain images
 publish: publish_gcc publish_clang
@@ -46,4 +46,4 @@ list:
 	-docker images crossbario/autobahn-cpp:*
 
 clean:
-	./docker/removeall.sh
+	./removeall.sh

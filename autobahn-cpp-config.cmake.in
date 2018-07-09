@@ -1,0 +1,18 @@
+@PACKAGE_INIT@
+
+include( CMakeFindDependencyMacro )
+
+find_dependency( Threads REQUIRED )
+find_dependency( OpenSSL REQUIRED )
+
+find_dependency( Boost REQUIRED COMPONENTS program_options system thread random)
+find_dependency( Msgpack REQUIRED)
+find_dependency( Websocketpp REQUIRED)
+
+include( "${CMAKE_CURRENT_LIST_DIR}/autobahn-cpp-targets.cmake" )
+
+# include( "${CMAKE_CURRENT_LIST_DIR}/autobahn-cpp-macros.cmake" )
+
+set( autobahn-cpp_FOUND TRUE )
+
+check_required_components( autobahn-cpp )
