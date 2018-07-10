@@ -13,19 +13,25 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Werror -Wno-unused-variable ${CMAKE_CXX_F
 
 list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/" )
 
-if(BUILD_SHARED_LIBS)
-    set(Boost_USE_STATIC_LIBS OFF )
+if( BUILD_SHARED_LIBS )
+    set( Boost_USE_STATIC_LIBS OFF )
 else()
     # https://stackoverflow.com/a/3176086/884770
-    set(Boost_USE_STATIC_LIBS ON )
+    set( Boost_USE_STATIC_LIBS ON )
 endif()
 
-find_package(Threads REQUIRED)
-find_package(OpenSSL REQUIRED)
+find_package( Threads REQUIRED )
+find_package( OpenSSL 1.0 EXACT REQUIRED )
 
-find_package(Boost REQUIRED COMPONENTS program_options system thread random)
-find_package(Msgpack REQUIRED)
-find_package(Websocketpp REQUIRED)
+find_package( Boost REQUIRED
+  COMPONENTS
+    system
+    thread
+    random
+)
+
+find_package( Msgpack REQUIRED )
+find_package( Websocketpp REQUIRED )
 
 MESSAGE( STATUS "AUTOBAHN_BUILD_EXAMPLES:  " ${AUTOBAHN_BUILD_EXAMPLES} )
 MESSAGE( STATUS "CMAKE_ROOT:               " ${CMAKE_ROOT} )
@@ -43,16 +49,16 @@ add_library( autobahn-cpp::autobahn-cpp ALIAS autobahn-cpp )
 target_include_directories( autobahn-cpp INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
-  ${Boost_INCLUDE_DIRS}
   ${OPENSSL_INCLUDE_DIR}
   ${Websocketpp_INCLUDE_DIRS}
   ${Msgpack_INCLUDE_DIRS})
 
 target_link_libraries( autobahn-cpp INTERFACE
-  ${Boost_LIBRARIES}
-  ${OPENSSL_LIBRARIES}
-  ${CMAKE_THREAD_LIBS_INIT}
-  ${CMAKE_DL_LIBS})
+  Boost::system
+  Boost::thread
+  Boost::random
+  OpenSSL::SSL
+)
 
 install( TARGETS autobahn-cpp EXPORT autobahn-cpp-targets )
 
