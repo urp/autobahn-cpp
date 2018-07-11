@@ -2,11 +2,11 @@
 
 include( CMakeFindDependencyMacro )
 
-find_package( Boost COMPONENTS system thread random )
+find_dependency( Boost COMPONENTS system thread random REQUIRED )
 
-# find_dependency( Msgpack REQUIRED)
+# find_dependency( Msgpack REQUIRED )
 
-find_dependency( Websocketpp REQUIRED)
+find_dependency( Websocketpp REQUIRED )
 
 # Find OpenSSL 1.0
 find_package(OpenSSL 1.0 EXACT QUIET )
