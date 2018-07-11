@@ -5,7 +5,7 @@ include( CMakeFindDependencyMacro )
 find_dependency( Boost REQUIRED COMPONENTS system thread random )
 
 # Find OpenSSL 1.0
-find_dependency(OpenSSL 1.0 EXACT )
+find_package(OpenSSL 1.0 EXACT QUIET )
 if( NOT OPENSSL_FOUND )
   message( WARNING "OpenSSL 1.0 not found. Using workaround..." )
   if( NOT ( EXISTS /usr/lib/libssl.so.1.0.0 AND IS_DIRECTORY /usr/include/openssl-1.0 ) )
