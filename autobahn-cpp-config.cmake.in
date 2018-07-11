@@ -2,7 +2,7 @@
 
 include( CMakeFindDependencyMacro )
 
-find_dependency( Boost REQUIRED COMPONENTS system thread random )
+find_dependency( Boost COMPONENTS system thread random )
 
 # Find OpenSSL 1.0
 find_package(OpenSSL 1.0 EXACT QUIET )
