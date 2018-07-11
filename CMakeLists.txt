@@ -20,8 +20,23 @@ else()
     set( Boost_USE_STATIC_LIBS ON )
 endif()
 
-find_package( Threads REQUIRED )
-find_package( OpenSSL 1.0 EXACT REQUIRED )
+# Find OpenSSL 1.0
+find_package(OpenSSL 1.0 EXACT )
+if( NOT OPENSSL_FOUND )
+  message( WARNING "OpenSSL 1.0 not found. Using workaround..." )
+  if( NOT ( EXISTS /usr/lib/libssl.so.1.0.0 AND IS_DIRECTORY /usr/include/openssl-1.0 ) )
+    message( FATAL_ERROR "Unable to find OpenSSL 1.0" )
+  endif()
+  add_library( OpenSSL::SSL SHARED IMPORTED )
+  set_target_properties( OpenSSL::SSL
+    PROPERTIES
+      IMPORTED_LOCATION /usr/lib/libssl.so.1.0.0
+  )
+  target_link_libraries( OpenSSL::SSL INTERFACE /usr/lib/libcrypto.so.1.0.0 )
+  target_include_directories( OpenSSL::SSL INTERFACE /usr/include/openssl-1.0 )
+endif()
+
+# Find other deps
 
 find_package( Boost REQUIRED
   COMPONENTS
