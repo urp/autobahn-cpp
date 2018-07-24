@@ -137,5 +137,7 @@ install(
 
 
 if(AUTOBAHN_BUILD_EXAMPLES)
-    add_subdirectory(examples)
+
+  add_subdirectory(examples)
+
 endif(AUTOBAHN_BUILD_EXAMPLES)
