@@ -10,18 +10,26 @@ find_dependency( Websocketpp REQUIRED )
 
 # Find OpenSSL 1.0
 find_package(OpenSSL 1.0 EXACT QUIET )
-if( NOT OPENSSL_FOUND )
+
+if( NOT ( OPENSSL_FOUND OR TARGET OpenSSL::SSL ) )
+
   message( WARNING "OpenSSL 1.0 not found. Using workaround..." )
+
   if( NOT ( EXISTS /usr/lib/libssl.so.1.0.0 AND IS_DIRECTORY /usr/include/openssl-1.0 ) )
     message( FATAL_ERROR "Unable to find OpenSSL 1.0" )
   endif()
+
   add_library( OpenSSL::SSL SHARED IMPORTED )
+
   set_target_properties( OpenSSL::SSL
     PROPERTIES
       IMPORTED_LOCATION /usr/lib/libssl.so.1.0.0
   )
+
   target_link_libraries( OpenSSL::SSL INTERFACE /usr/lib/libcrypto.so.1.0.0 )
+
   target_include_directories( OpenSSL::SSL INTERFACE /usr/include/openssl-1.0 )
+
 endif()
 
 
