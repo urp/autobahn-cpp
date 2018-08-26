@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.1)
 
+project( autobahn-cpp VERSION 18.4.1 )
+
 include( GNUInstallDirs )
 include( CMakePackageConfigHelpers )
-
-project( autobahn-cpp VERSION 18.4.1 )
 
 option(AUTOBAHN_BUILD_EXAMPLES "Build examples" ON)
 
